@@ -11,12 +11,10 @@ on:
 
 jobs:
   build-and-test:
-
     runs-on: macos-latest
 
     steps:
-
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Select Xcode
@@ -24,10 +22,16 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: Build & Test
+      - name: Show Xcode Version
+        run: xcodebuild -version
 
+      - name: List Schemes
+        run: xcodebuild -list -project "Ganapathi Bank.xcodeproj"
+
+      - name: Build and Test
         run: |
           xcodebuild \
-          test \
-          -scheme GanapathiBank \
-          -destination 'platform=iOS Simulator,name=iPhone 17'
+            test \
+            -project "Ganapathi Bank.xcodeproj" \
+            -scheme "Ganapathi Bank" \
+            -destination 'platform=iOS Simulator,name=iPhone 16'
