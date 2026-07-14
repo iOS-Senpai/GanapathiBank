@@ -34,4 +34,4 @@ jobs:
             test \
             -project "Ganapathi Bank.xcodeproj" \
             -scheme "Ganapathi Bank" \
-            -destination 'platform=iOS Simulator,name=iPhone 16'
+            -destination 'platform=iOS Simulator,name=iPhone 17'
