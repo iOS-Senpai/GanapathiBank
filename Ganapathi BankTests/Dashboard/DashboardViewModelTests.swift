@@ -115,9 +115,4 @@ final class DashboardViewModelTests: XCTestCase {
         //Assert
         XCTAssertNil(sut.errorMessage)
     }
-    
-    // MARK: - Helpers
-    enum MockError: Error {
-        case networkError
-    }
 }
