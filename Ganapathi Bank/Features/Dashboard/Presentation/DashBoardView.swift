@@ -12,25 +12,23 @@ struct DashBoardView: View {
     @Bindable var viewModel: DashBoardViewModel
     
     var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "buildings.columns.fill")
-                .font(.system(size: 64))
-                .foregroundStyle(.white)
-            
-            Text("Welcome")
-            
-            Text(viewModel.name)
-                .font(.title2)
-                .bold()
-            
-            Button("Logout") {
-                viewModel.logout()
+        NavigationStack {
+            List {
+                ForEach(viewModel.accounts) { account in
+                    VStack(alignment: .leading) {
+                        Text(account.accountNumber)
+                        Text(account.balance.formatted())
+                    }
+                }
             }
+            .navigationTitle("DashBoard")
         }
-        .navigationTitle("Dashboard")
+        .task {
+            await viewModel.loadAccounts()
+        }
     } // Renders
 }
 
 #Preview {
-    DashBoardView(viewModel: DashBoardViewModel(sessionManager: SessionManager()))
+    DashBoardView(viewModel: DashBoardViewModel(repository: MockAccountsRepository()))
 }

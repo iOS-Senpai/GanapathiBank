@@ -8,7 +8,16 @@
 final class AppContainer {
     
     private let session = SessionManager()
+    private let configuaration = AppConfiguration(environment: .development)
     lazy var authenticatioService: AuthenticationService = MockAuthenticationService()// Provide concrete implementation
+    
+    lazy var apiClient: APIClient = {
+        return URLSessionAPIClient(configuaration: configuaration)
+    }()
+    
+    lazy var accountsRepository: AccountsRepository = {
+        return MockAccountsRepository()
+    }()
     
     // Login Feature Flow Instantiation
     func makeAuthenticationCoordinator() -> AuthenticationCoordinator {
@@ -17,7 +26,7 @@ final class AppContainer {
     
     // Dashboard Feature Flow Instantiation
     func makeDashboardCoordinator() -> DashboardCoordinator {
-        return DashboardCoordinator(sessionManager: session)
+        return DashboardCoordinator(accountsRepo: accountsRepository)
     }
     
     // Root Coordinator or App Coordinator

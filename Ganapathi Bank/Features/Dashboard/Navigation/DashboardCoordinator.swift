@@ -8,14 +8,14 @@
 @MainActor
 final class DashboardCoordinator {
     
-    private let sessionManager: SessionManager
+    private let accountsRepo: AccountsRepository
     
-    init(sessionManager: SessionManager) {
-        self.sessionManager = sessionManager
+    init(accountsRepo: AccountsRepository) {
+        self.accountsRepo = accountsRepo
     }
     
     func start() -> DashBoardView {
-        let viewModel = DashBoardViewModel(sessionManager: sessionManager)
+        let viewModel = DashBoardViewModel(repository: accountsRepo)
         return DashBoardView(viewModel: viewModel)
     }
 } // Coordinates with feature flow
