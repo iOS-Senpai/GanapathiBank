@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AccountResponseDTO: Decodable {
+struct AccountResponseDTO: Codable {
     let id: UUID
     let accountNumber: String
     let balance: Decimal
