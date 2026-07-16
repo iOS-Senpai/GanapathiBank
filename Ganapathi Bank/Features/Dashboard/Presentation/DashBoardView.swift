@@ -22,6 +22,13 @@ struct DashBoardView: View {
                 }
             }
             .navigationTitle("DashBoard")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Logout") {
+                        viewModel.logout()
+                    }
+                }
+            }
         }
         .task {
             await viewModel.loadAccounts()
@@ -30,5 +37,5 @@ struct DashBoardView: View {
 }
 
 #Preview {
-    DashBoardView(viewModel: DashBoardViewModel(repository: MockAccountsRepository()))
+    DashBoardView(viewModel: DashBoardViewModel(repository: MockAccountsRepository(), session: SessionManager()))
 }

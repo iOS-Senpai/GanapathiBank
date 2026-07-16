@@ -26,7 +26,7 @@ final class AppContainer {
     
     // Dashboard Feature Flow Instantiation
     func makeDashboardCoordinator() -> DashboardCoordinator {
-        return DashboardCoordinator(accountsRepo: accountsRepository)
+        return DashboardCoordinator(accountsRepo: accountsRepository, session: session)
     }
     
     // Root Coordinator or App Coordinator
