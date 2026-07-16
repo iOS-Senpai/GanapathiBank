@@ -59,7 +59,7 @@ final class AppCoordinatorTests: XCTestCase {
             authenticationService: authenticationService,
             sessionManager: session
         )
-        dashboardCoordinator = DashboardCoordinator(accountsRepo: MockAccountsRepository())
+        dashboardCoordinator = DashboardCoordinator(accountsRepo: MockAccountsRepository(), session: session)
         return AppCoordinator(
             session: session,
             authenticationCoordinator: authenticationCoordinator,

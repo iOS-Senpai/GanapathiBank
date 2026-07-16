@@ -14,12 +14,14 @@ final class DashboardViewModelTests: XCTestCase {
     // MARK: - Dependencies
     private var sut: DashBoardViewModel!
     private var repository: FakeAccountsRepository!
+    private var session: SessionManager!
     
     // MARK: - Life Cycle Methods
     override func setUp() {
         super.setUp()
         repository = FakeAccountsRepository()
-        sut = DashBoardViewModel(repository: repository)
+        session = SessionManager()
+        sut = DashBoardViewModel(repository: repository, session: session)
     }
     
     override func tearDown() {
@@ -84,7 +86,7 @@ final class DashboardViewModelTests: XCTestCase {
     
     func test_loadAccounts_loadingState() async {
         // Arrange
-        let sut = DashBoardViewModel(repository: DelayedAccountsRepository())
+        let sut = DashBoardViewModel(repository: DelayedAccountsRepository(), session: session)
         
         // Act
         let task = Task {
