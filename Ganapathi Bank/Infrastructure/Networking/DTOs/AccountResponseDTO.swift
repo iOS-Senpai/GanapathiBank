@@ -23,6 +23,6 @@ struct AccountResponseDTO: Codable {
 
 extension AccountResponseDTO {
     func toDomain() -> Account {
-        return Account(id: id, accountNumber: accountNumber, balance: balance)
+        return Account(id: id, accountNumber: accountNumber, balance: balance, currency: currency)
     }
 }

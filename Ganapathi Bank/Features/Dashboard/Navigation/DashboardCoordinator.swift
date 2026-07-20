@@ -5,19 +5,22 @@
 //  Created by xavient on 7/12/26.
 //
 
-@MainActor
+import Observation
+
+@MainActor @Observable
 final class DashboardCoordinator {
+    // State
+    var selectedTab: DashboardTab = .accounts
     
-    private let accountsRepo: AccountsRepository
-    private let session: SessionManager
+    // Dependencies
+    private let appContainer: AppContainer
     
-    init(accountsRepo: AccountsRepository, session: SessionManager) {
-        self.accountsRepo = accountsRepo
-        self.session = session
+    init(appContainer: AppContainer) {
+        self.appContainer = appContainer
     }
     
-    func start() -> DashBoardView {
-        let viewModel = DashBoardViewModel(repository: accountsRepo, session: session)
-        return DashBoardView(viewModel: viewModel)
+    // Public API
+    func start() -> DashboardRootView {
+        return DashboardRootView(coordinator: self, appContainer: appContainer)
     }
-} // Coordinates with feature flow
+} // Coordinates with Tab Navigation

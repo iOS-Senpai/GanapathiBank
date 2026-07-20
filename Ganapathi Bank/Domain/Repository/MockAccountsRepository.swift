@@ -8,10 +8,15 @@ import Foundation
 
 final class MockAccountsRepository: AccountsRepository {
 
-    func fetchAccounts() async throws -> [Account] {
-        return [
-            Account(id: .init(), accountNumber: "50100225596702", balance: 500000000000),
-            Account(id: .init(), accountNumber: "50100225596702", balance: 10000000000000)
-        ]
+    func fetchAccounts() -> [Account] {
+        let accounts: [Account] = (1...100).map { index in
+            Account(
+                id: .init(),
+                accountNumber: "50100225596702",
+                balance: index % 2 == 0 ? 500_000_000_000 : 10_000_000_000_000,
+                currency: "INR"
+            )
+        }
+        return accounts
     }
 }

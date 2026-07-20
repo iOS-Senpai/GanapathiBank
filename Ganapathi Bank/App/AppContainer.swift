@@ -29,7 +29,7 @@ final class AppContainer {
     }()
     
     lazy var accountsRepository: AccountsRepository = {
-        return DefaultAccountsRepository(remote: accountsRemoteDataSource, local: accountsLocalDataSource)
+        return MockAccountsRepository() //DefaultAccountsRepository(remote: accountsRemoteDataSource, local: accountsLocalDataSource)
     }()
     
     // Login Feature Flow Instantiation
@@ -37,14 +37,31 @@ final class AppContainer {
         return AuthenticationCoordinator(authenticationService: authenticatioService, sessionManager: session)
     }
     
-    // Dashboard Feature Flow Instantiation
+    // Dashboard Tab Navigation 
     func makeDashboardCoordinator() -> DashboardCoordinator {
-        return DashboardCoordinator(accountsRepo: accountsRepository, session: session)
+        return DashboardCoordinator(appContainer: self)
     }
     
     // Root Coordinator or App Coordinator
     func makeAppCoordinator() -> AppCoordinator {
         return AppCoordinator(session: session, authenticationCoordinator: makeAuthenticationCoordinator(), dashboardCoordinator: makeDashboardCoordinator())
+    }
+    
+    func makeAccountsCoordinator() -> AccountsCoordinator {
+        return AccountsCoordinator()
+    }
+    
+    func makeAccountsRootView() -> AccountsRootView {
+      
+        return AccountsRootView(coordinator: makeAccountsCoordinator(), appContainer: self)
+    }
+    
+    func makeAccountsView(coordinator: AccountsCoordinator) -> AccountsView {
+        return AccountsView(viewModel: makeAccountsViewModel(), coordinator: coordinator)
+    }
+    
+    func makeAccountsViewModel() -> AccountsViewModel {
+        return AccountsViewModel(repository: accountsRepository)
     }
     
 } // composition root.or Application Dependency Graph. Centralized where all the application dependencies are assembled.

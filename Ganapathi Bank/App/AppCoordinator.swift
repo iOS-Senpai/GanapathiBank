@@ -26,11 +26,10 @@ final class AppCoordinator {
     
     @ViewBuilder
     func start() -> some View {
-        switch currentFlow {
-        case .login:
-            authenticationCoordinator.start()
-        case .dashboard:
+        if session.hasActiveSession {
             dashboardCoordinator.start()
+        } else {
+            authenticationCoordinator.start()
         }
     } // API or Behaviour exposing
     

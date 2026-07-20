@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct Ganapathi_BankApp: App {
-    @State var appContainer = AppContainer() // Composition Root or Assembler or Top Level Object or Dependency Graph.
+    @State private var appContainer = AppContainer() // Composition Root or Assembler or Top Level Object or Dependency Graph.
     var body: some Scene {
         WindowGroup {
             appContainer.makeAppCoordinator().start()
