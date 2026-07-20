@@ -4,6 +4,7 @@
 //
 //  Created by xavient on 7/9/26.
 //
+import SwiftData
 
 final class AppContainer {
     
@@ -15,8 +16,20 @@ final class AppContainer {
         return URLSessionAPIClient(configuaration: configuaration)
     }()
     
+    lazy var accountsRemoteDataSource = {
+        return APIAccountsRemoteDataSource(apiClient: apiClient)
+    }()
+    
+    private lazy var modelContainer = ModelContainerFactory.make(inMemory: false)
+    
+    private lazy var modelContext = modelContainer.mainContext
+    
+    lazy var accountsLocalDataSource = {
+        return SwiftDataAccountsLocalDataSource(context: modelContext)
+    }()
+    
     lazy var accountsRepository: AccountsRepository = {
-        return MockAccountsRepository()
+        return DefaultAccountsRepository(remote: accountsRemoteDataSource, local: accountsLocalDataSource)
     }()
     
     // Login Feature Flow Instantiation

@@ -11,4 +11,5 @@ struct Account: Identifiable, Equatable {
     let id: UUID
     let accountNumber: String
     let balance: Decimal
+    let currency: String
 }

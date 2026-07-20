@@ -1,11 +1,11 @@
 //
-//  RemoteAccountsRepository.swift
+//  APIAccountsRemoteDataSource.swift
 //  Ganapathi Bank
 //
 //  Created by xavient on 7/14/26.
 //
 
-struct RemoteAccountsRepository: AccountsRepository {
+struct APIAccountsRemoteDataSource: AccountsRemoteDataSource {
     
     private let apiClient: APIClient
     
