@@ -1,0 +1,11 @@
+default_platform(:ios)
+
+platform :ios do
+
+  desc "Verify Fastlane setup"
+
+  lane :doctor do
+    puts "🚀 Ganapathi Bank Fastlane is configured successfully!"
+  end
+
+end
