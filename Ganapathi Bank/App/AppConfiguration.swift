@@ -8,9 +8,9 @@
 import Foundation
 
 struct AppConfiguration {
-    // State
+    /// State
     let environment: Environment // immutable
-    
+
     var baseURL: URL {
         switch environment {
         case .development:
@@ -21,5 +21,4 @@ struct AppConfiguration {
             return URL(string: "https://production-ganapathi-bank/com/")!
         }
     }
-    
 }

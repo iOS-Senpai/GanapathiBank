@@ -9,15 +9,14 @@ import Foundation
 
 @MainActor
 final class AuthenticationCoordinator {
-    
     private let authenticationService: AuthenticationService
     private let session: SessionManager
-    
-    public init(authenticationService: AuthenticationService, sessionManager: SessionManager) {
+
+    init(authenticationService: AuthenticationService, sessionManager: SessionManager) {
         self.authenticationService = authenticationService
-        self.session = sessionManager
+        session = sessionManager
     }
-    
+
     func start() -> LoginView {
         let viewModel = LoginViewModel(authenticationService: authenticationService,
                                        session: session)

@@ -1,53 +1,54 @@
 //
-//  RemoteAccountsRepository.swift
+//  APIAccountsRemoteDataSourceTests.swift
 //  Ganapathi BankTests
 //
 //  Created by xavient on 7/15/26.
 //
 
-import XCTest
 @testable import Ganapathi_Bank
+import XCTest
 
 @MainActor
-final class RemoteAccountsRepositoryTests: XCTestCase {
-    
+final class APIAccountsRemoteDataSourceTests: XCTestCase {
     // Dependencies or Collbarators or State
     private var apiClient: MockAPIClient!
-    private var sut: RemoteAccountsRepository!
-    
+    private var sut: APIAccountsRemoteDataSource!
+
     // MARK: - LifeCycle
+
     override func setUp() {
         super.setUp()
         apiClient = MockAPIClient()
-        sut = RemoteAccountsRepository(apiClient: apiClient)
+        sut = APIAccountsRemoteDataSource(apiClient: apiClient)
     }
-    
+
     override func tearDown() {
         apiClient = nil
         sut = nil
         super.tearDown()
     }
-    
-    //MARk: - Test suite
+
+    // MARK: - Test suite
+
     func test_fetchAccounts_success_returnsMappedDomainModels() async throws {
-        //Arrange
-        let dto = AccountResponseDTO(id: .init(), accountNumber: "501002256702", balance: 10000000, currency: "$")
+        // Arrange
+        let dto = AccountResponseDTO(id: .init(), accountNumber: "501002256702", balance: 10_000_000, currency: "$")
         apiClient.result = [dto]
-        
-        //Act
+
+        // Act
         let accounts = try await sut.fetchAccounts()
-        
-        //Assert
+
+        // Assert
         XCTAssertEqual(accounts.count, 1)
         XCTAssertEqual(accounts.first?.accountNumber, dto.accountNumber)
         XCTAssertEqual(accounts.first?.balance, dto.balance)
     }
-    
+
     func test_fetchAccounts_failure_propagatesError() async {
-        //Arrange
+        // Arrange
         apiClient.error = MockError.networkError
-        
-        //Act + Assert
+
+        // Act + Assert
         do {
             _ = try await sut.fetchAccounts()
             XCTFail("Expected fetchAccounts() to return error")
@@ -55,15 +56,15 @@ final class RemoteAccountsRepositoryTests: XCTestCase {
             XCTAssertTrue(error is MockError)
         }
     }
-    
+
     func test_fecthAccounts_callsAPIClient() async throws {
-        //Arrange
+        // Arrange
         apiClient.result = [AccountResponseDTO]()
-        
-        //Act
+
+        // Act
         _ = try await sut.fetchAccounts()
-        
-        //Assert
+
+        // Assert
         XCTAssertTrue(apiClient.executeCalled)
     }
 }

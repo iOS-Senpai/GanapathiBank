@@ -12,7 +12,7 @@ struct AccountResponseDTO: Codable {
     let accountNumber: String
     let balance: Decimal
     let currency: String
-    
+
     private enum CodingKeys: String, CodingKey {
         case id
         case accountNumber = "account_number"

@@ -1,19 +1,23 @@
-name: iOS CI
+name: Ganapathi Bank CI
 
 on:
   push:
     branches:
       - main
+      - develop
 
   pull_request:
     branches:
       - main
+      - develop
 
 jobs:
-  build-and-test:
+  build:
+
     runs-on: macos-latest
 
     steps:
+
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -22,16 +26,13 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: Show Xcode Version
-        run: xcodebuild -version
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
 
-      - name: List Schemes
-        run: xcodebuild -list -project "Ganapathi Bank.xcodeproj"
+      - name: Install Gems
+        run: bundle install
 
-      - name: Build and Test
-        run: |
-          xcodebuild \
-            test \
-            -project "Ganapathi Bank.xcodeproj" \
-            -scheme "Ganapathi Bank" \
-            -destination 'platform=iOS Simulator,name=iPhone 17'
+      - name: Run Fastlane CI
+        run: bundle exec fastlane ci

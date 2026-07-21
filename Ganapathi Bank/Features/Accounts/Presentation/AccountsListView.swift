@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct AccountsListView: View {
-    
     let accounts: [Account]
     let accountSelected: (Account.ID) -> Void
-    
+
     var body: some View {
         List {
             ForEach(accounts) { account in

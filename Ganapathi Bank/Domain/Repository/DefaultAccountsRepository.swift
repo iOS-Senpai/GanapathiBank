@@ -10,12 +10,12 @@ import Foundation
 final class DefaultAccountsRepository: AccountsRepository {
     private let remote: AccountsRemoteDataSource // Collabarating Dependencies
     private let local: AccountsLocalDataSource
-    
+
     init(remote: AccountsRemoteDataSource, local: AccountsLocalDataSource) {
         self.remote = remote
         self.local = local
     }
-    
+
     /// Fetches the latest accounts.
     ///
     /// Strategy:

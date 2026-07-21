@@ -5,17 +5,67 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000354">
+      <testcase classname="fastlane.lanes" name="00: default_platform" time="0.000418">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: xcodebuild -version" time="0.107518">
+      <testcase classname="fastlane.lanes" name="01: Switch to ios environment lane" time="9.2e-05">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: swift --version" time="2.132486">
+      <testcase classname="fastlane.lanes" name="02: xcodebuild -version" time="0.092397">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="03: swift --version" time="0.164096">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="04: Switch to ios quality lane" time="0.00013">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="05: Switch to ios run_formatter lane" time="8.3e-05">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="06: swiftformat ." time="0.070631">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="07: Switch to ios run_linter lane" time="0.000125">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="08: swiftlint lint --config .swiftlint.yml || true" time="0.441348">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="09: Switch to ios test lane" time="0.000151">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="10: scan" time="134.818303">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="11: Switch to ios build lane" time="0.000223">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="12: build_app" time="15.904756">
         
       </testcase>
     

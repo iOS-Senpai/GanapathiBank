@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct DashboardRootView: View {
-    
     @Bindable private var coordinator: DashboardCoordinator
     private let appContainer: AppContainer
-    
+
     init(coordinator: DashboardCoordinator, appContainer: AppContainer) {
         self.coordinator = coordinator
         self.appContainer = appContainer
     }
-    
+
     var body: some View {
         TabView(selection: $coordinator.selectedTab) {
             appContainer.makeAccountsRootView()

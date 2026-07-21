@@ -1,0 +1,5 @@
+--indent 4
+--linebreaks lf
+--trimwhitespace always
+--self remove
+--ifdef no-indent

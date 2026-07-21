@@ -9,17 +9,17 @@ import Observation
 
 @MainActor @Observable
 final class DashboardCoordinator {
-    // State
+    /// State
     var selectedTab: DashboardTab = .accounts
-    
-    // Dependencies
+
+    /// Dependencies
     private let appContainer: AppContainer
-    
+
     init(appContainer: AppContainer) {
         self.appContainer = appContainer
     }
-    
-    // Public API
+
+    /// Public API
     func start() -> DashboardRootView {
         return DashboardRootView(coordinator: self, appContainer: appContainer)
     }

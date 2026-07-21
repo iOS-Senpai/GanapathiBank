@@ -13,9 +13,9 @@ struct AccountRowView: View {
         // Card
         VStack(alignment: .leading, spacing: 16) {
             header
-            
+
             balance
-            
+
             accountNumber
         }
         .padding()
@@ -30,7 +30,7 @@ struct AccountRowView: View {
                 .stroke(.quaternary)
         }
     }
-    
+
     private var header: some View {
         HStack {
             Image(systemName: "indianrupeesign.bank.building.fill")
@@ -39,7 +39,7 @@ struct AccountRowView: View {
             Image(systemName: "chevron.right")
         }
     }
-    
+
     private var balance: some View {
         VStack(alignment: .leading) {
             Text("Balance")
@@ -47,7 +47,7 @@ struct AccountRowView: View {
                 .font(.title3.bold())
         }
     }
-    
+
     private var accountNumber: some View {
         VStack(alignment: .leading) {
             Text("Account Number")

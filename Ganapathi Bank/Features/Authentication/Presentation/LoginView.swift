@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct LoginView: View {
-    
     @State private var username = ""
     @State private var password = ""
     @State var viewModel: LoginViewModel
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -29,12 +28,12 @@ struct LoginView: View {
                     SecureField("password", text: $password)
                         .textFieldStyle(.roundedBorder)
                         .textContentType(.password)
-                    
+
                     Button("Forgot Password?") {
                         // Action
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    
+
                     Button("Login") {
                         Task {
                             await viewModel.login(username: username, password: password)
@@ -46,12 +45,12 @@ struct LoginView: View {
                     .background(.red)
                     .foregroundStyle(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
-                    
+
                     if viewModel.isLoading {
                         ProgressView()
                             .progressViewStyle(.circular)
                     }
-                    
+
                     if let errorMessage = viewModel.errorMessage {
                         Text(errorMessage)
                             .foregroundStyle(.red)
@@ -63,17 +62,19 @@ struct LoginView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .alert(viewModel.alertState?.title ?? "", isPresented: showAlert, presenting: viewModel.alertState) { state in // Modelling the Data
-            Button(state.buttonTitle, role: .cancel) { } // Gets a strongly typed data
+            Button(state.buttonTitle, role: .cancel) {} // Gets a strongly typed data
         } message: { state in
             Text(state.message) // Gets a strongly typed data
         }
     }
-    
+
     private var showAlert: Binding<Bool> {
         Binding {
             viewModel.alertState != nil
         } set: { newValue in
-            if !newValue { viewModel.alertState = nil }
+            if !newValue {
+                viewModel.alertState = nil
+            }
         }
     } // Binding acts a bridge or translator between SwiftUI and ViewModel.
 }

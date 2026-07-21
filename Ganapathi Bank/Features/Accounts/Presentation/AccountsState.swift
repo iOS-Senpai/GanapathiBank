@@ -7,7 +7,8 @@
 
 import Foundation
 
-//MARK: - Presentation State or View Satet
+// MARK: - Presentation State or View Satet
+
 enum AccountsState {
     case idle
     case loading

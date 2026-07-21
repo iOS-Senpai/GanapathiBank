@@ -12,11 +12,11 @@ import SwiftData
 final class AccountEntity {
     @Attribute(.unique)
     var id: UUID
-    
+
     var accountNumber: String
     var balance: Decimal
     var currency: String
-    
+
     init(id: UUID, accountNumber: String, balance: Decimal, currency: String) {
         self.id = id
         self.accountNumber = accountNumber

@@ -9,9 +9,8 @@ import Foundation
 @testable import Ganapathi_Bank
 
 final class FakeAccountsRepository: AccountsRepository {
-    
     var result: Result<[Account], Error>!
-    
+
     func fetchAccounts() async throws -> [Account] {
         return try result.get()
     }

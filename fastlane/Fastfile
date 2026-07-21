@@ -1,20 +1,120 @@
 default_platform(:ios)
 
+PROJECT_ROOT = File.expand_path("..", __dir__)
+
 platform :ios do
+
+  ############################################################
+  # 🩺 Doctor
+  ############################################################
 
   desc "Verify Fastlane setup"
   lane :doctor do
     UI.success("🚀 Ganapathi Bank Fastlane is configured successfully!")
   end
 
+  ############################################################
+  # 🌍 Environment
+  ############################################################
+
   desc "Display build environment"
   lane :environment do
-    UI.message("Project : Ganapathi Bank.xcodeproj")
-    UI.message("Scheme  : Ganapathi Bank")
-    UI.message("Config  : Release")
+    UI.message("Project       : Ganapathi Bank.xcodeproj")
+    UI.message("Scheme        : Ganapathi Bank")
+    UI.message("Configuration : Release")
 
     sh("xcodebuild -version")
     sh("swift --version")
+  end
+
+  ############################################################
+  # 🔒 Private Lanes
+  ############################################################
+
+  private_lane :run_formatter do
+    Dir.chdir(PROJECT_ROOT) do
+      sh("swiftformat .")
+    end
+  end
+
+  private_lane :run_linter do
+    Dir.chdir(PROJECT_ROOT) do
+      sh("swiftlint lint --config .swiftlint.yml || true")
+    end
+  end
+
+  ############################################################
+  # 🎨 Code Formatting
+  ############################################################
+
+  desc "Format Swift source code"
+  lane :format do
+    run_formatter
+  end
+
+  ############################################################
+  # 🔍 Code Linting
+  ############################################################
+
+  desc "Lint Swift source code"
+  lane :lint do
+    run_linter
+  end
+
+  ############################################################
+  # ✅ Code Quality
+  ############################################################
+
+  desc "Run all code quality checks"
+  lane :quality do
+    run_formatter
+    run_linter
+  end
+
+  ############################################################
+  # 🧪 Unit Tests
+  ############################################################
+
+  desc "Run unit tests"
+  lane :test do
+    scan(
+      project: "Ganapathi Bank.xcodeproj",
+      scheme: "Ganapathi Bank",
+      device: "iPhone 17",
+      clean: true,
+      code_coverage: true,
+      output_directory: "fastlane/test_output",
+      output_types: "html,junit"
+    )
+  end
+
+  ############################################################
+  # 🏗️ Build
+  ############################################################
+
+  desc "Build the application"
+  lane :build do
+    build_app(
+      project: "Ganapathi Bank.xcodeproj",
+      scheme: "Ganapathi Bank",
+      configuration: "Debug",
+      skip_archive: true,
+      skip_package_ipa: true,
+      clean: true,
+      xcargs: "CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO"
+    )
+  end
+
+  ############################################################
+  # 🚀 Continuous Integration
+  ############################################################
+
+  desc "Run the complete CI pipeline"
+  lane :ci do
+    environment
+    quality
+    test
+    build
   end
 
 end

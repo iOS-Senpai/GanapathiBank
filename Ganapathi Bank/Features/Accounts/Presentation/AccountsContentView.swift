@@ -11,12 +11,11 @@ struct AccountsContentView: View {
     let state: AccountsState
     let onRefresh: () async -> Void
     let accountSelected: (Account.ID) -> Void
-    
+
     var body: some View {
         content
     }
-    
-    
+
     @ViewBuilder
     private var content: some View {
         switch state {
@@ -24,17 +23,17 @@ struct AccountsContentView: View {
             ProgressView()
         case .loading:
             AccountsLoadingView()
-        case .loaded(let accounts):
+        case let .loaded(accounts):
             accountsList(accounts)
-        case .refreshing(let accounts):
+        case let .refreshing(accounts):
             accountsList(accounts)
         case .empty:
             AccountsEmptyView()
-        case .error(let message):
+        case let .error(message):
             AccountsErrorView(message: message)
         }
     } // Rendering Based on State
-    
+
     private func accountsList(_ accounts: [Account]) -> some View {
         AccountsListView(accounts: accounts, accountSelected: accountSelected)
             .refreshable {

@@ -8,6 +8,7 @@
 import Foundation
 
 // MARK: - Helpers
+
 enum MockError: Error {
     case networkError
 }

@@ -9,13 +9,12 @@ import Foundation
 @testable import Ganapathi_Bank
 
 final class MockAPIClient: APIClient {
-    
     // State
     var executeCalled = false
     var result: Any?
     var error: Error?
-    
-    func execute<E>(_ endPoint: E) async throws -> E.Response where E : EndPoint {
+
+    func execute<E: EndPoint>(_: E) async throws -> E.Response {
         executeCalled = true
         if let error {
             throw error

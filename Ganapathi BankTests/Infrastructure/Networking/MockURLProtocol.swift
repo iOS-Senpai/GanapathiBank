@@ -8,26 +8,25 @@
 import Foundation
 
 final class MockURLProtocol: URLProtocol {
-    
     // Behaviour
     typealias RequestHandler = (URLRequest) throws -> (Data, URLResponse)
     static var requestHandler: RequestHandler?
-    
-    // Life Cycle Methods
-    override class func canInit(with request: URLRequest) -> Bool {
+
+    /// Life Cycle Methods
+    override class func canInit(with _: URLRequest) -> Bool {
         return true
     }
-    
+
     override class func canonicalRequest(for request: URLRequest) -> URLRequest {
         return request
     }
-    
+
     override func startLoading() {
         // Lets check handler
         guard let handler = Self.requestHandler else {
             fatalError("Handler not set")
         }
-        
+
         do {
             let (data, response) = try handler(request)
             client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
@@ -38,5 +37,5 @@ final class MockURLProtocol: URLProtocol {
         }
     }
 
-    override func stopLoading() { }
+    override func stopLoading() {}
 }

@@ -7,9 +7,8 @@
 import Foundation
 
 final class MockAccountsRepository: AccountsRepository {
-
     func fetchAccounts() -> [Account] {
-        let accounts: [Account] = (1...100).map { index in
+        return (1 ... 100).map { index in
             Account(
                 id: .init(),
                 accountNumber: "50100225596702",
@@ -17,6 +16,5 @@ final class MockAccountsRepository: AccountsRepository {
                 currency: "INR"
             )
         }
-        return accounts
     }
 }

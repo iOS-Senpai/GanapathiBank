@@ -19,13 +19,11 @@ struct Ganapathi_BankApp: App {
 
 /*
  Mutiple Driven Architecture Exists
- 
+
  Test Driven Architecture
  Behvioural Driven Architecture
  State Driven Architecture
  Event Driven Arhitecture
  Data Driven Architecture
- 
+
  */
-
-

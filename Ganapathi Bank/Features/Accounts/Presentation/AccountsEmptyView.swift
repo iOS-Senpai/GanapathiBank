@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AccountsEmptyView: View {
-    
     var body: some View {
         ContentUnavailableView(
             "No Accounts",

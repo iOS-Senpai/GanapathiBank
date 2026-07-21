@@ -12,19 +12,19 @@ final class LoginViewModel {
     // State
     var isLoading = false
     var errorMessage: String?
-    var successMessage: String?  // Intent Based or Dervie the state from Intent.
+    var successMessage: String? // Intent Based or Dervie the state from Intent.
     var alertState: AlertState?
-    
+
     private let authenticationService: AuthenticationService
     private let session: SessionManager
-    
+
     init(authenticationService: AuthenticationService, session: SessionManager) {
         self.authenticationService = authenticationService
         self.session = session
     }
-    
+
     // Behaviour
-    
+
     func login(username: String, password: String) async {
         guard !username.isEmpty else {
             errorMessage = "Username is empty"
@@ -40,7 +40,7 @@ final class LoginViewModel {
             isLoading = false
         } // clean up
         do {
-            let user = try await self.authenticationService.login(username: username, password: password)
+            let user = try await authenticationService.login(username: username, password: password)
             session.login(user)
             successMessage = "Welcome, \(user.username)" // Update it
             alertState = AlertState(title: "Login", message: "Successfully Authenticated", buttonTitle: "OK")
@@ -50,5 +50,4 @@ final class LoginViewModel {
             errorMessage = "Something went worng"
         }
     }
-    
 } // Presentation Behaviour

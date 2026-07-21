@@ -9,7 +9,6 @@ import Foundation
 import SwiftData
 
 enum ModelContainerFactory {
-    
     static func make(inMemory: Bool) -> ModelContainer {
         let configuration = ModelConfiguration(isStoredInMemoryOnly: inMemory)
         do {

@@ -5,39 +5,37 @@
 //  Created by xavient on 7/15/26.
 //
 
-import XCTest
 @testable import Ganapathi_Bank
+import XCTest
 
 @MainActor
 final class URLSessionAPIClientTests: XCTestCase {
-    
-    // Dependencies or Collabarators or State
+    /// Dependencies or Collabarators or State
     private var sut: URLSessionAPIClient!
-    
-    
+
     // MARK: - Life Cycle
-    
+
     override func setUp() {
         super.setUp()
-        let sessionConfiguration  = URLSessionConfiguration.ephemeral
+        let sessionConfiguration = URLSessionConfiguration.ephemeral
         sessionConfiguration.protocolClasses = [MockURLProtocol.self]
         let session = URLSession(configuration: sessionConfiguration)
         let appConfiguration = AppConfiguration(environment: .development)
         sut = URLSessionAPIClient(session: session, configuaration: appConfiguration)
     }
-    
+
     override func tearDown() {
         // Reduce test pollution
         sut = nil
         MockURLProtocol.requestHandler = nil
         super.tearDown()
     }
-    
+
     // MARK: - Test Suite
-    
+
     func test_execute_success_returnsDecodedResponse() async throws {
         // Arrange
-        let accountDTO = AccountResponseDTOBuilder.make(balance: 100000)
+        let accountDTO = AccountResponseDTOBuilder.make(balance: 100_000)
         let data = try Fixture.data(from: [accountDTO])
         MockURLProtocol.requestHandler = { request in
             let response = HTTPURLResponse(
@@ -48,22 +46,22 @@ final class URLSessionAPIClientTests: XCTestCase {
             )!
             return (data, response)
         }
-        
+
         // Act
         let accounts = try await sut.execute(AccountsEndpoint.accounts)
-        
+
         // Assert
         XCTAssertEqual(accounts.count, 1)
         XCTAssertNotNil(accounts.first)
     }
-    
+
     func test_execute_WhenUnAuthorized_throwsUnAuthorizedError() async throws {
         // Arrange
-        MockURLProtocol.requestHandler = { request in
+        MockURLProtocol.requestHandler = { _ in
             let response = self.makeResponse(statusCode: 401)
             return (Data(), response)
         }
-        
+
         do {
             // ACT + Assert
             try await executeAccountsRequest()
@@ -77,14 +75,14 @@ final class URLSessionAPIClientTests: XCTestCase {
             XCTFail("unknown error \(error)")
         }
     }
-    
+
     func test_execute_WhenForbidden_throwsForbideenError() async throws {
         // Arrange
-        MockURLProtocol.requestHandler = { request in
+        MockURLProtocol.requestHandler = { _ in
             let response = self.makeResponse(statusCode: 403)
             return (Data(), response)
         }
-        
+
         do {
             // ACT + Assert
             try await executeAccountsRequest()
@@ -98,14 +96,14 @@ final class URLSessionAPIClientTests: XCTestCase {
             XCTFail("unknown error \(error)")
         }
     }
-    
+
     func test_execute_WhenNotFound_throwsNotFoundError() async throws {
         // Arrange
-        MockURLProtocol.requestHandler = { request in
+        MockURLProtocol.requestHandler = { _ in
             let response = self.makeResponse(statusCode: 404)
             return (Data(), response)
         }
-        
+
         do {
             // ACT + Assert
             try await executeAccountsRequest()
@@ -119,14 +117,14 @@ final class URLSessionAPIClientTests: XCTestCase {
             XCTFail("unknown error \(error)")
         }
     }
-    
+
     func test_execute_whenServerError_throwsServerError() async throws {
         // Arrange
-        MockURLProtocol.requestHandler = { request in
+        MockURLProtocol.requestHandler = { _ in
             let response = self.makeResponse(statusCode: 500)
             return (Data(), response)
         }
-        
+
         do {
             // ACT + Assert
             try await executeAccountsRequest()
@@ -141,15 +139,15 @@ final class URLSessionAPIClientTests: XCTestCase {
             XCTFail("unknown error \(error)")
         }
     }
-    
+
     func test_execute_whenInvalidJson_throwsDecodingFailed() async throws {
         // Arrange
         let invalidJson = Data("invalid json".utf8)
-        MockURLProtocol.requestHandler = { request in
+        MockURLProtocol.requestHandler = { _ in
             let response = self.makeResponse(statusCode: 200)
             return (invalidJson, response)
         }
-        
+
         do {
             // ACT + Assert
             try await executeAccountsRequest()
@@ -163,12 +161,12 @@ final class URLSessionAPIClientTests: XCTestCase {
             XCTFail("unknown error \(error)")
         }
     }
-    
+
     func test_execute_whenNetworkFails_throwsNetworkError() async throws {
         MockURLProtocol.requestHandler = { _ in
             throw URLError(.notConnectedToInternet)
         }
-        
+
         do {
             // ACT + Assert
             try await executeAccountsRequest()
@@ -183,7 +181,7 @@ final class URLSessionAPIClientTests: XCTestCase {
             XCTFail("unknown error \(error)")
         }
     }
-    
+
     func test_execute_whenReponseIsNonHTTP_throwsInvalidResponse() async throws {
         MockURLProtocol.requestHandler = { request in
             let response = URLResponse(
@@ -194,7 +192,7 @@ final class URLSessionAPIClientTests: XCTestCase {
             )
             return (Data(), response)
         }
-        
+
         do {
             // ACT + Assert
             try await executeAccountsRequest()
@@ -208,7 +206,7 @@ final class URLSessionAPIClientTests: XCTestCase {
             XCTFail("unknown error \(error)")
         }
     }
-    
+
     func test_execute_buildsCorrectURLRequest() async throws {
         let dto = AccountResponseDTOBuilder.make()
         let data = try Fixture.data(from: [dto])
@@ -221,21 +219,20 @@ final class URLSessionAPIClientTests: XCTestCase {
         }
         try await executeAccountsRequest()
     }
-    
+
     // MARK: - Helpers
-    
+
     private func makeResponse(statusCode: Int) -> HTTPURLResponse {
-        let response = HTTPURLResponse(
+        return HTTPURLResponse(
             url: URL(string: "https://example.com")!,
             statusCode: statusCode,
             httpVersion: nil,
             headerFields: nil
         )!
-        return response
     }
-    
+
     @discardableResult
-    private func executeAccountsRequest() async throws -> [AccountResponseDTO ] {
-       return try await sut.execute(AccountsEndpoint.accounts)
+    private func executeAccountsRequest() async throws -> [AccountResponseDTO] {
+        return try await sut.execute(AccountsEndpoint.accounts)
     }
 }

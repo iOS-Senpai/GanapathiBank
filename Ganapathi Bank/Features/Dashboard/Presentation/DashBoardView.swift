@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct DashBoardView: View {
-    
     @Bindable var viewModel: DashBoardViewModel
-    
+
     var body: some View {
         NavigationStack {
             List {

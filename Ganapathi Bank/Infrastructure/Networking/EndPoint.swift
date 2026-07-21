@@ -17,9 +17,15 @@ protocol EndPoint {
 } // Contract Describing HTTP Request Information.
 
 extension EndPoint {
-    var queryItems: [URLQueryItem] { return [] }
-    
-    var headers: [String : String] { return [:] }
-    
-    var body: Data? { return nil }
+    var queryItems: [URLQueryItem] {
+        return []
+    }
+
+    var headers: [String: String] {
+        return [:]
+    }
+
+    var body: Data? {
+        return nil
+    }
 }

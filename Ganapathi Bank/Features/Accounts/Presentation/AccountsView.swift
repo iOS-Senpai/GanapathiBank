@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct AccountsView: View {
-    
     @State private var viewModel: AccountsViewModel
     private let coordinator: AccountsCoordinator
-    
+
     init(viewModel: AccountsViewModel, coordinator: AccountsCoordinator) {
         _viewModel = State(initialValue: viewModel)
         self.coordinator = coordinator
     }
-    
+
     var body: some View {
         AccountsContentView(
             state: viewModel.state,

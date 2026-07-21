@@ -6,10 +6,9 @@
 //
 
 struct MockAuthenticationService: AuthenticationService {
-    
     func login(username: String, password: String) async throws -> User {
         try await Task.sleep(for: .seconds(2))
-        if(username == "pradeep" && password == "123") {
+        if username == "pradeep" && password == "123" {
             return User(username: username)
         }
         throw LoginError.invalidCredentials

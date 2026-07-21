@@ -8,7 +8,6 @@
 import Foundation
 
 extension AccountEntity {
-    
     convenience init(account: Account) {
         self.init(
             id: account.id,
@@ -17,7 +16,7 @@ extension AccountEntity {
             currency: account.currency
         )
     }
-    
+
     func toDomain() -> Account {
         return Account(
             id: id,
@@ -26,10 +25,10 @@ extension AccountEntity {
             currency: currency
         )
     }
-    
+
     func update(from account: Account) {
-        self.accountNumber = account.accountNumber
-        self.balance = account.balance
-        self.currency = account.currency
+        accountNumber = account.accountNumber
+        balance = account.balance
+        currency = account.currency
     }
 }
