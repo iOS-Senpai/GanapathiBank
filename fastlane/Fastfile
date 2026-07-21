@@ -3,9 +3,18 @@ default_platform(:ios)
 platform :ios do
 
   desc "Verify Fastlane setup"
-
   lane :doctor do
-    puts "🚀 Ganapathi Bank Fastlane is configured successfully!"
+    UI.success("🚀 Ganapathi Bank Fastlane is configured successfully!")
+  end
+
+  desc "Display build environment"
+  lane :environment do
+    UI.message("Project : Ganapathi Bank.xcodeproj")
+    UI.message("Scheme  : Ganapathi Bank")
+    UI.message("Config  : Release")
+
+    sh("xcodebuild -version")
+    sh("swift --version")
   end
 
 end
