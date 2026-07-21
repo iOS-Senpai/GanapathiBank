@@ -1,3 +1,5 @@
+
+[![Ganapathi Bank CI](https://github.com/iOS-Senpai/GanapathiBank/actions/workflows/iOS.yml/badge.svg)](https://github.com/iOS-Senpai/GanapathiBank/actions/workflows/iOS.yml)
 # 🏦 Ganapathi Bank
 
 A modern iOS banking application built with **SwiftUI**, **Swift Concurrency**, **Clean Architecture**, and **Test-Driven Development (TDD)**.
